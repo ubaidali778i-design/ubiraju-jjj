@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>My Valentine — FAKIHA</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Segoe UI', sans-serif;
+}
+
+body{
+    height:100vh;
+    background:radial-gradient(circle, #8b0000, #3b0000);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    color:white;
+    overflow:hidden;
+}
+
+/* Glowing text */
+.glow{
+    color:white;
+    text-shadow:
+        0 0 5px #fff,
+        0 0 15px #ffb6c1,
+        0 0 30px #ff4d6d;
+    animation: glowPulse 2s infinite alternate;
+}
+
+@keyframes glowPulse{
+    from{ text-shadow:0 0 10px #ff4d6d; }
+    to{ text-shadow:0 0 30px #fff; }
+}
+
+.container{
+    text-align:center;
+    max-width:850px;
+    padding:30px;
+    animation: fadeIn 2s ease;
+}
+
+@keyframes fadeIn{
+    from{opacity:0; transform:scale(0.9);}
+    to{opacity:1; transform:scale(1);}
+}
+
+h1{
+    font-size:2.4rem;
+    margin-bottom:20px;
+}
+
+p{
+    font-size:1.25rem;
+    line-height:1.8;
+    margin-bottom:35px;
+}
+
+button{
+    background:white;
+    color:#8b0000;
+    border:none;
+    padding:16px 45px;
+    font-size:1.4rem;
+    border-radius:50px;
+    cursor:pointer;
+    font-weight:bold;
+    box-shadow:0 0 25px rgba(255,255,255,0.6);
+    transition:0.3s;
+}
+
+button:hover{
+    transform:scale(1.15);
+}
+
+/* Hearts */
+.heart{
+    position:absolute;
+    color:red;
+    font-size:20px;
+    animation: float 6s linear forwards;
+}
+
+@keyframes float{
+    0%{transform:translateY(0); opacity:1;}
+    100%{transform:translateY(-120vh); opacity:0;}
+}
+
+/* Proposal screen */
+.proposal{
+    display:none;
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,0.85);
+    color:white;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    animation: fadeIn 1.5s ease;
+}
+
+.ring{
+    font-size:90px;
+    margin-bottom:20px;
+    animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse{
+    0%{transform:scale(1);}
+    50%{transform:scale(1.2);}
+    100%{transform:scale(1);}
+}
+</style>
+</head>
+
+<body>
+
+<!-- Romantic Background Music -->
+<audio autoplay loop>
+    <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
+</audio>
+
+<div class="container">
+    <h1 class="glow">Will You Be My Valentine, FAKIHA? 💖</h1>
+
+    <p>
+        You are my <strong>last love</strong>, <span class="glow">Fakiha</span>.<br>
+        I genuinely never asked anyone to be my Valentine before.<br><br>
+        So please… my moon of life 🌙<br>
+        Be my Valentine, be my mama —<br>
+        <strong class="glow">MY FAKIHA ❤️</strong>
+    </p>
+
+    <button onclick="acceptLove(event)">YES 💕</button>
+</div>
+
+<!-- Proposal Screen -->
+<div class="proposal" id="proposal">
+    <div class="ring">💍</div>
+    <h1 class="glow">She Said YES ❤️</h1>
+    <p style="margin-top:20px; font-size:1.3rem;">
+        Forever starts with you, <span class="glow">FAKIHA</span>
+    </p>
+</div>
+
+<script>
+function acceptLove(e){
+    explodeHearts(e.clientX, e.clientY);
+    setTimeout(()=>{
+        document.querySelector(".container").style.display="none";
+        document.getElementById("proposal").style.display="flex";
+    },800);
+}
+
+// heart explosion
+function explodeHearts(x,y){
+    for(let i=0;i<40;i++){
+        const heart=document.createElement("div");
+        heart.className="heart";
+        heart.innerHTML="❤️";
+        heart.style.left=x+"px";
+        heart.style.top=y+"px";
+        heart.style.fontSize=(Math.random()*25+15)+"px";
+        document.body.appendChild(heart);
+
+        const angle=Math.random()*2*Math.PI;
+        const distance=Math.random()*200;
+        heart.animate([
+            {transform:`translate(0,0)`},
+            {transform:`translate(${Math.cos(angle)*distance}px, ${Math.sin(angle)*distance}px)`}
+        ],{duration:1200,easing:"ease-out"});
+
+        setTimeout(()=>heart.remove(),1200);
+    }
+}
+
+// floating hearts background
+setInterval(()=>{
+    const h=document.createElement("div");
+    h.className="heart";
+    h.innerHTML="❤️";
+    h.style.left=Math.random()*100+"vw";
+    h.style.top="100vh";
+    h.style.fontSize=(Math.random()*20+10)+"px";
+    document.body.appendChild(h);
+    setTimeout(()=>h.remove(),6000);
+},300);
+</script>
+
+</body>
+</html>
